@@ -43,20 +43,35 @@ You can connect with me on:
 
 - **Question**: What is an inline function in Kotlin?
     - **Answer**: [What is an inline function in Kotlin?](https://www.youtube.com/watch?v=GLLI8h67ryo)
+    - Advantage: avoid function call overhead. Faster program execution
+    - When to use inline function: when the function code is very small
 - **Question**: What is the advantage of using const in Kotlin?
     - **Answer**: [What is the advantage of using const in Kotlin?](https://www.youtube.com/watch?v=3G49ivVxfkU)
+    - Inline the variable and thus avoid overhead. Better performance
 - **Question**: What is a reified keyword in Kotlin?
     - **Answer**: [What is a reified keyword in Kotlin?](https://www.youtube.com/watch?v=kD2T84FnTck)
+    - Ask the compiler to retain the type of the object
 - **Question**: Suspending vs Blocking in Kotlin Coroutines
     - **Answer**: [Suspending vs Blocking in Kotlin Coroutines](https://www.youtube.com/watch?v=V2lL_aJp17I)
+    - runBlocking: block current thread for waiting. It bridges the non-coroutine world and corouine world
+    - Suspend: release the underlying thread for other usages
 - **Question**: Launch vs Async in Kotlin Coroutines
     - **Answer**: [Launch vs Async in Kotlin Coroutines](https://www.youtube.com/watch?v=B4AfTPpCU5o)
+    - async starts a new coroutine and returns a Deferred object. Deferred represents a concept known by other names such as Future or Promise. It stores a computation, but it defers the moment you get the final result; it promises the result sometime in the future.
+    - The main difference between async and launch is that launch is used to start a computation that isn't expected to return a specific result. launch returns a Job that represents the coroutine. It is possible to wait until it completes by calling Job.join().
 - **Question**: internal visibility modifier in Kotlin
     - **Answer**: [internal visibility modifier in Kotlin](https://www.youtube.com/watch?v=wOHpuf74-cI)
+    - intenral: Visible in the same module
+    - protected: private + subclasses
 - **Question**: open keyword in Kotlin
-    - **Answer**: [open keyword in Kotlin](https://www.youtube.com/watch?v=bfpNDWNE6I0)
+    - **Answer**: [open keyword in Kotlin](https://www.youtube.com/watch?v=bfpNDWNE6I0
+    - open: allow inheritence
+    - Java: open by default. Final keyword
+    - Kotlin: final by default. Open keywork
 - **Question**: lateinit vs lazy in Kotlin
     - **Answer**: [lateinit vs lazy in Kotlin](https://www.youtube.com/watch?v=IU2ZktdM-fo)
+    - lateinit:" don not initialize a variable at the time of declaration
+    - lazy: create an object inside a class, but that object creation is expensive and that might lead to a delay in the creation of the object that is dependent on that expensive object.
 - **Question**: What is Multidex in Android?
     - **Answer**: [What is Multidex in Android?](https://www.youtube.com/watch?v=R0zd8lmHnmE)
 - **Question**: How does the Android Push Notification system work?
