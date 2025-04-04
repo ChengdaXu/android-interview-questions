@@ -57,8 +57,10 @@ You can connect with me on:
     - Suspend: release the underlying thread for other usages
 - **Question**: Launch vs Async in Kotlin Coroutines
     - **Answer**: [Launch vs Async in Kotlin Coroutines](https://www.youtube.com/watch?v=B4AfTPpCU5o)
-    - async starts a new coroutine and returns a Deferred object. Deferred represents a concept known by other names such as Future or Promise. It stores a computation, but it defers the moment you get the final result; it promises the result sometime in the future.
     - The main difference between async and launch is that launch is used to start a computation that isn't expected to return a specific result. launch returns a Job that represents the coroutine. It is possible to wait until it completes by calling Job.join().
+    - async starts a new coroutine and returns a Deferred object. Deferred represents a concept known by other names such as Future or Promise. It stores a computation, but it defers the moment you get the final result; it promises the result sometime in the future.
+    - If any exception comes inside the launch block, it crashes the application if we have not handled it.
+    - If any exception comes inside the async block, it is stored inside the resulting Deferred and is not delivered anywhere else, it will get silently dropped unless we handle it.
 - **Question**: internal visibility modifier in Kotlin
     - **Answer**: [internal visibility modifier in Kotlin](https://www.youtube.com/watch?v=wOHpuf74-cI)
     - intenral: Visible in the same module
@@ -74,32 +76,66 @@ You can connect with me on:
     - lazy: create an object inside a class, but that object creation is expensive and that might lead to a delay in the creation of the object that is dependent on that expensive object.
 - **Question**: What is Multidex in Android?
     - **Answer**: [What is Multidex in Android?](https://www.youtube.com/watch?v=R0zd8lmHnmE)
+    - A configuration that allows Android apps to bypass the 64K method reference limit imposed by DEX format
 - **Question**: How does the Android Push Notification system work?
     - **Answer**: [How does the Android Push Notification system work?](https://www.youtube.com/watch?v=810IFG2sWlc)
+    - Firebase cloud messaging (FCM).
+    - When an app is installed/opened, it registers with FCM (via Google Play Services) to obtain a unque registration token.
+    - The app send the token to its application server
+    - Server send messages to CFM with token
+    - FCM deliver the message to device via persistent connection
+    - OS: if the app is in the foreground, then directly pass data to it via onMessageReceived(). Otherwise, show a notifcation in the system tray. 
 - **Question**: How does the Kotlin Multiplatform work?
-    - **Answer**: [How does the Kotlin Multiplatform work?](https://www.youtube.com/watch?v=nwfNh6Kd5hI)
+    - **Answer**: [How does the Kotlin Multiplatform work?](https://www.youtube.com/watch?v=nwfNh6Kd5hI
+    - Android: code is converted to the Java bytecode that can be executed in the JVM.
+    - iOS: Kotlin code -> IR (Intermediate Representation) -> source code (native code executable on iOS)
 - **Question**: What is a ViewModel and how is it useful?
     - **Answer**: [What is a ViewModel and how is it useful?](https://www.youtube.com/watch?v=ORtieK5f_zg)
+    - Hold the data for UI
+    - Handle bussiness logic
+    - Process data get from data layer (maybe combine multiple sources)
+    - Persist the data during configuration changes
+    - Lifecycle awareness: view model is only destroyed when the activity is permanently destroyed: onCleared will be called in this case
+    - Alternative solution: use saved instance, but it can only contain small data
 - **Question**: Is it possible to force the Garbage Collection in Android?
     - **Answer**: [Is it possible to force Garbage Collection in Android?](https://www.youtube.com/watch?v=fPEjpFKo1-Q)
+    - No. Although we can call System.gc() to request the garbage collection, it doesn't mean this request will be exeucted immeidately. JVM will decide when to do it
 - **Question**: What is a JvmStatic Annotation in Kotlin?
-    - **Answer**: [What is a JvmStatic Annotation in Kotlin?](https://www.youtube.com/watch?v=qBBbOhY_pv4)
+    - **Answer**: [What is a JvmStatic Annotation in Kotlin?](https://outcomeschool.com/blog/jvmstatic-annotation-in-kotlin)
+    - Instruct compiler go generate an additional static method for us
+    - For object, that means we don't need to call ObjectClass.INSTANCE.function();
+    - For Companion object, that means we don't need to call Class.Companion.function()
 - **Question**: init block in Kotlin
-    - **Answer**: [init block in Kotlin](https://www.youtube.com/watch?v=cb3jOFozJns)
+    - **Answer**: [init block in Kotlin]([https://www.youtube.com/watch?v=cb3jOFozJns)](https://outcomeschool.com/blog/init-block-in-kotlin)
+    - We can't write any code in the primary constructor, but we can do it in secondary constructors.
+    - Order: Primary constructor -> init -> secondary constructor
+    - Can have muliple constructors. Executed in the same  oder as in the calss body
+    - When to use: perform a task during the initialization of an object and we do not have a necessity for a secondary constructor
 - **Question**: JvmField Annotation in Kotlin
     - **Answer**: [JvmField Annotation in Kotlin](https://www.youtube.com/watch?v=bx8OZcMbeUE)
+    - Instruct the Kotlin compiler not to generate any getter and setter for the field and expose it as a field instead
 - **Question**: singleTask launchMode in Android
-    - **Answer**: [singleTask launchMode in Android](https://www.youtube.com/watch?v=WYkQEnm4jeI)
+    - **Answer**: [singleTask launchMode in Android](https://outcomeschool.com/blog/singletask-launchmode-in-android)
+    - If the activity doesn't exist, then create a new activity
+    - If the activity exists, then go back to the existing instance. That activity will receive the new intent through the onNewIntent() method. Activities after it in the backstack will be destroyed
+    - Key benefits: single instance, stack cleanup, consistent state
 - **Question**: Difference between == and === in Kotlin
-    - **Answer**: [Difference between == and === in Kotlin](https://www.youtube.com/watch?v=lJtgxT2OIgQ)
+    - **Answer**: [Difference between == and === in Kotlin]([https://outcomeschool.com/blog/structural-and-referential-equality-in-kotlin)])
+    - == -> equals in Java, structural equality
+    - === -> == in Java, referential equality
 - **Question**: JvmOverloads Annotation in Kotlin
     - **Answer**: [JvmOverloads Annotation in Kotlin](https://www.youtube.com/watch?v=fHGsBV9Za8M)
+    - Generate overloads for the function or constructor that substitute default parmeter values
 - **Question**: Why is it recommended to use only the default constructor to create a Fragment?
-    - **Answer**: [Why is it recommended to use only the default constructor to create a Fragment?](https://www.youtube.com/watch?v=CitBt0FZFIc)
+    - **Answer**: [Why is it recommended to use only the default constructor to create a Fragment?](https://outcomeschool.com/blog/default-constructor-to-create-a-fragment)
+    - Whenever the Android Framework decides to recreate our Fragment, Android calls the no-argument constructor of our Fragment, because Android Framework has no idea what constructors we have created.
+    - The recommended way is creating a newInstance function and pass parameter with Bundle and fragment.arguments = bundle. When the system restores a fragment, it will automatically restore our bundle
 - **Question**: Why do we need to call setContentView() in onCreate() of Activity class?
     - **Answer**: [Why do we need to call setContentView() in onCreate() of Activity class?](https://www.youtube.com/watch?v=U1aHAt7XC5I)
+    - Because onCreate() will be only called once for each creation
 - **Question**: When only onDestroy is called for an activity without onPause() and onStop()?
     - **Answer**: [When only onDestroy is called for an activity without onPause() and onStop()?](https://www.youtube.com/watch?v=B2kY_ckZa-g)
+    - When we explicity call finish()
 
 ### Kotlin Coroutines
 
