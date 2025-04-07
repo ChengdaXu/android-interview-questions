@@ -142,9 +142,20 @@ You can connect with me on:
 Topics you should know in **Kotlin Coroutines** for Android Interview:
 
 * coroutines
+  - A framework to manage concurrency in a more performant and simple way with its lightweight thread which is written on top of the actual threading framework to get the most out of it by taking the advantage of cooperative nature of functions.
+  - Coroutines and the threads both are multitasking. But the difference is that threads are managed by the OS and coroutines by the users as it can execute a few lines of function by taking advantage of the cooperation.
+  - Coroutines are lightweight threads. A lightweight thread means it doesn't map on the native thread, so it doesn't require context switching on the processor, so they are faster.
 * suspend
+  - Suspen function is a function that can be started, paused and resume.
 * launch, async-await, withContext
+  - launch: fire and forget. Return a Job
+  - await: perform a task and return a result. Return a deferred
+  - withContext: a suspend function through which we can do a task by providing the Dispathcers on which on which we want the task to be done
+  - withContext doesn't create a new coroutine. It only shifts the context of the existing coroutine and it's a suspend functio whereas launch and async create a new coroutine and they are not suspend fucntions
 * dispatchers
+  - IO: network and disk-related work
+  - Default: CPU-intense work
+  - Main: UI thread
 * scope, context, job
 * lifecycleScope, viewModelScope, GlobalScope
 * suspendCoroutine, suspendCancellableCoroutine
