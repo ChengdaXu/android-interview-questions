@@ -188,11 +188,27 @@ Learn the above-mentioned from the following links:
 Topics you should know in **Kotlin Flow API** for Android Interview:
 
 * Flow Builder, Operator, Collector
+      - Flow is not started until we call a terminal operation, e.g collect, reduce (similarly in RxJava, the observable is not executed until we subscribe it)
+      - Flow builder: build a flow
+      - Operator: e.g map
+      - Collector
 * flowOn, dispatchers
+      - Set the context/dispatcher for the flow to execute, like subscriberOn in RxJava
 * Operators such as filter, map, zip, flatMapConcat, retry, debounce, distinctUntilChanged, flatMapLatest
+      - zip: combine two flow
+      - retry: set the max retry num and predicate to tell whether we should retry
+      - debounce: Returns a flow that mirrors the original flow, but filters out values that are followed by the newer values within the given timeout. The latest value is always emitted.
+      - flatMapConcat: Transforms elements emitted by the original flow by applying transform, that returns another flow, and then concatenating and flattening these flows.
+      - flatMapLatest:	Cancels previous Flow on new emission
 * Terminal operators
+      - Operatos that actually start the flow by connecting the flow builder, operators with the collector
 * Cold Flow vs Hot Flow
+      - See https://outcomeschool.com/blog/cold-flow-vs-hot-flow
 * StateFlow, SharedFlow, callbackFlow, channelFlow
+      - StateFlow and SharedFlow: https://outcomeschool.com/blog/stateflow-and-sharedflow
+      - StateFlow = ShareFlow.withInitialValue(initialValue).replay(count = 1).distinctUntilChanged
+      - callbackFlow: convert callback (e.g a listener) to a flow
+      - channelFlow: a specialized cold flow builder for scenarios requiring concurrent data emission from multiple coroutine, as it allows launching multiple coroutines
 
 Learn the above-mentioned from the following links:
 
