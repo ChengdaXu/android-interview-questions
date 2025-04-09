@@ -159,7 +159,13 @@ Topics you should know in **Kotlin Coroutines** for Android Interview:
 * scope, context, job
 * lifecycleScope, viewModelScope, GlobalScope
 * suspendCoroutine, suspendCancellableCoroutine
+      - See this article: https://outcomeschool.com/blog/callback-to-coroutines-in-kotlin
+      - onSuccess: continuation.resume(result)
+      - onFail: continuation.resumeWithException(throwable)
+      - cancel: continutation.invokeOnCancellation
 * coroutineScope, supervisorScope
+      - coroutineScope: cancelled if any child fails, and then it will cancel all its child coroutines
+      - supervisorScope: won't be cancelled when child fails (if it doesn't throw an exception in launch or deferred.await())
 
 Learn the above-mentioned from the following links:
 
