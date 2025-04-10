@@ -195,11 +195,16 @@ Topics you should know in **Kotlin Flow API** for Android Interview:
 * flowOn, dispatchers
       - Set the context/dispatcher for the flow to execute, like subscriberOn in RxJava
 * Operators such as filter, map, zip, flatMapConcat, retry, debounce, distinctUntilChanged, flatMapLatest
-  - zip: combine two flow
+  - zip vs combine:
+      - zip: runs when both flows emit a new value
+      - combine: runs when any flow emits a new value 
   - retry: set the max retry num and predicate to tell whether we should retry
   - debounce: Returns a flow that mirrors the original flow, but filters out values that are followed by the newer values within the given timeout. The latest value is always emitted.
   - flatMapConcat: Transforms elements emitted by the original flow by applying transform, that returns another flow, and then concatenating and flattening these flows.
   - flatMapLatest:	Cancels previous Flow on new emission
+  - buffer: cache intermediate results of a flow
+  - conflate: skip intermediate result. Only process the most recent one by dropping emitted values
+  - collectLatest: cancel the code in collect block on a new value
 * Terminal operators
   - Operatos that actually start the flow by connecting the flow builder, operators with the collector
 * Cold Flow vs Hot Flow
