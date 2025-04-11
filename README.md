@@ -50,7 +50,7 @@ You can connect with me on:
     - Inline the variable and thus avoid overhead. Better performance
 - **Question**: What is a reified keyword in Kotlin?
     - **Answer**: [What is a reified keyword in Kotlin?](https://www.youtube.com/watch?v=kD2T84FnTck)
-    - Ask the compiler to retain the type of the object
+    - Ask the compiler to retain the type information of an inline function
 - **Question**: Suspending vs Blocking in Kotlin Coroutines
     - **Answer**: [Suspending vs Blocking in Kotlin Coroutines](https://www.youtube.com/watch?v=V2lL_aJp17I)
     - runBlocking: block current thread for waiting. It bridges the non-coroutine world and corouine world
@@ -146,7 +146,7 @@ Topics you should know in **Kotlin Coroutines** for Android Interview:
   - Coroutines and the threads both are multitasking. But the difference is that threads are managed by the OS and coroutines by the users as it can execute a few lines of function by taking advantage of the cooperation.
   - Coroutines are lightweight threads. A lightweight thread means it doesn't map on the native thread, so it doesn't require context switching on the processor, so they are faster.
 * suspend
-  - Suspen function is a function that can be started, paused and resume.
+  - Suspen function is a function that can be paused and resumed later without blocking the current thread.
 * launch, async-await, withContext
   - launch: fire and forget. Return a Job
   - await: perform a task and return a result. Return a deferred
@@ -157,6 +157,21 @@ Topics you should know in **Kotlin Coroutines** for Android Interview:
   - Default: CPU-intense work
   - Main: UI thread
 * scope, context, job
+  - scope
+      - A holder of a coroutine context
+      - Lifecycle management: it controls the lifecycle of coroutines launched in it. If the scope is canceled, all its coroutines and child coroutines are canceled automatically
+      - Mandatory for coroutine builder: coroutine builder functions like runBlocking, async, launch are extensions of CoroutineScope
+  - context
+      - CoroutineContext is an interface in Kotlin's coroutines that helps us define the context or the environment in which a coroutine executes
+      - Dispatcher
+      - Job
+      - CoroutineName
+      - Exception handler
+  - job
+      - A job is an interface in kotlin coroutine library that represents a coroutine's lifecycle. Every coroutine launched in Kotlin returns a job object
+      - It's responsible for controlling the coroutine's status, such as whether it's active, completed or cancelled
+      - You can cnacel the job, which cancels the associated coroutine's and its children
+      - Jobs can have hierachical relationships. Cancelling a parent job cancels all its children 
 * lifecycleScope, viewModelScope, GlobalScope
 * suspendCoroutine, suspendCancellableCoroutine
       - See this article: https://outcomeschool.com/blog/callback-to-coroutines-in-kotlin
@@ -237,6 +252,11 @@ Learn the above-mentioned from the following links:
 Android Interview Questions and Answers:
 
 * **15 Kotlin Interview Questions and Answers**: [Check the PDF](https://www.linkedin.com/posts/outcomeschool_kotlin-interview-questions-and-answers-activity-7276115620536954880-cFUa)
+    - Elvis operator ?: : set default value when dealing with nullable types
+    - return a function: ::function
+    - Thread.sleep() vs delay():
+        - Thread.sleep(): pauses the execution of the current thread for the specified number of milliseconds. It blocks the current tread, which means the thread cannot do any other work while sleeping
+        - dleya(): a suspend function so it's non blocking. It pauses the execution of the coroutine without blocking the underlying thread.
 
 * **What is the advantage of using const in Kotlin?** - [Video](https://www.youtube.com/watch?v=3G49ivVxfkU) and [Blog](https://outcomeschool.com/blog/const-in-kotlin)
 
@@ -247,6 +267,8 @@ Android Interview Questions and Answers:
 * **What are `companion objects` in Kotlin?** - [Learn from here](https://outcomeschool.com/blog/companion-object-in-kotlin)
 
 * **Extension functions** - [Learn from here](https://outcomeschool.com/blog/extension-function-in-kotlin)
+    - An extension function in Kotlin allows us to add new functions to existing classes without modifying their source code or extending them
+    - Compiler generate a final class with aa static function with the same name and the original class as the first parameter
 
 * **What is a data class in Kotlin?** - [Learn from here](https://outcomeschool.com/blog/data-class-in-kotlin)
 
@@ -259,12 +281,19 @@ Android Interview Questions and Answers:
 * **What is a JvmOverloads Annotation in Kotlin?** - [Video](https://www.youtube.com/watch?v=fHGsBV9Za8M) and [Blog](https://outcomeschool.com/blog/jvmoverloads-annotation-in-kotlin)
 
 * **noinline in Kotlin** - [Learn from here](https://outcomeschool.com/blog/noinline-in-kotlin)
+    - By default, all lambdas in inline functions are inlined. noinline keyword prevent that
+    - Common use case:
+        - when we have a large lambda
+        - Storing lambda in variable
+        - return lambda from functions
 
 * **crossinline in Kotlin** - [Learn from here](https://outcomeschool.com/blog/crossinline-in-kotlin)
+    - Disable non-local return
 
 * **scope functions in Kotlin** - [Learn from here](https://kotlinlang.org/docs/scope-functions.html)
 
 * **What is a reified keyword in Kotlin?** - [Learn from here](https://www.youtube.com/watch?v=kD2T84FnTck)
+    - ask the compiler to retain the type information of an inline function
 
 * **lateinit vs lazy in Kotlin** - [Learn from here](https://outcomeschool.com/blog/lateinit-vs-lazy-in-kotlin)
 
@@ -275,12 +304,14 @@ Android Interview Questions and Answers:
 * **Advantage of using const in Kotlin** - [Learn from here](https://www.youtube.com/watch?v=3G49ivVxfkU)
 
 * **What are higher-order functions in Kotlin?** - Learn from here: [Higher-Order Functions and Lambdas in Kotlin](https://outcomeschool.com/blog/higher-order-functions-and-lambdas-in-kotlin)
+    - A higher-order function is a function that takes function as parameters or returns a function
 
 * **Write a function(Higher-Order Function) that returns a function.** - [Check solution here](https://x.com/amitiitbhu/status/1862721662208155800)
 
 * **What are Lambdas in Kotlin** - Learn from here: [Higher-Order Functions and Lambdas in Kotlin](https://outcomeschool.com/blog/higher-order-functions-and-lambdas-in-kotlin)
 
 * **AssociateBy - List to Map in Kotlin** - [Learn from here](https://outcomeschool.com/blog/associateby-list-to-map-in-kotlin)
+    - convert list to map
 
 * **Open keyword in Kotlin** - [Learn from here](https://outcomeschool.com/blog/open-keyword-in-kotlin)
 
@@ -289,8 +320,10 @@ Android Interview Questions and Answers:
 * **internal visibility modifier in Kotlin** - [Learn from here](https://youtu.be/wOHpuf74-cI)
 
 * **partition - filtering function in Kotlin** - [Learn from here](https://outcomeschool.com/blog/partition-filtering-function-in-kotlin)
+    - Split a list to two by a predicate which returns a boolean
 
 * **Infix notation in Kotlin** - [Learn from here](https://outcomeschool.com/blog/infix-notation-in-kotlin)
+    - Functions marked with the infix keyword can also be called using the infix notation (omitting the dot and the parentheses for the call).
 
 * **How does the Kotlin Multiplatform work?** - [Learn from here](https://youtu.be/nwfNh6Kd5hI)
 
@@ -301,12 +334,15 @@ Android Interview Questions and Answers:
 * **What is the meaning of structured concurrency in Kotlin Coroutines?** - [Learn from here](https://www.linkedin.com/posts/outcomeschool_softwareengineer-androiddev-android-activity-7267476661967683584-wDCh/)
 
 * **String vs StringBuffer vs StringBuilder** - [Learn from here](https://outcomeschool.com/blog/string-vs-stringbuffer-vs-stringbuilder)
+    - StringBuffer is thread-safe while StringBuilder is not, because methods of StringBuffer is synchronized. Thus, StringBuilder has better performance thatn StringBuffer
 
 * **What is the difference between `val` and `var`?** - [Learn from here](https://stackoverflow.com/questions/44200075/val-and-var-in-kotlin)
 
 * **How to check if a `lateinit` variable has been initialized?** - [Learn from here](https://outcomeschool.com/blog/lateinit-vs-lazy-in-kotlin)
+    - isInitialized
 
 * **How to do lazy initialization of variables in Kotlin?** - [Learn from here](https://outcomeschool.com/blog/lateinit-vs-lazy-in-kotlin)
+    - by lazy
 
 * **What are the visibility modifiers in Kotlin?** - [Learn from here](https://www.linkedin.com/posts/pallavi-shekhar_outcomeschool-softwareengineer-tech-activity-7305070243620544512-NqDW)
 
@@ -314,27 +350,16 @@ Android Interview Questions and Answers:
 
 * **How to create a Singleton class in Kotlin?** - [Learn from here](https://www.linkedin.com/posts/amit-shekhar-iitbhu_outcomeschool-softwareengineer-tech-activity-7297112198252806144-97Eh)
 
-* **What is the difference between `open` and `public` in Kotlin?** - [Learn from here](https://outcomeschool.com/blog/open-keyword-in-kotlin)
-
 * **`apply` scope function and its use cases** - [Learn from here](https://www.linkedin.com/posts/amit-shekhar-iitbhu_outcomeschool-softwareengineer-tech-activity-7302625113240154114-GNgz)
 
 * **`let` scope function and its use cases** - [Learn from here](https://www.linkedin.com/posts/outcomeschool_outcomeschool-softwareengineer-tech-activity-7297672603203223552-_9zp)
 
 * **Explain the use-case of `let`, `run`, `with`, `also`, `apply` in Kotlin.** - Learn from [here](https://kotlinlang.org/docs/scope-functions.html) and [here](https://stackoverflow.com/questions/45977011/example-of-when-should-we-use-run-let-apply-also-and-with-on-kotlin)
 
-* **How to choose between `apply` and `with`?** - Learn from [here](https://kotlinlang.org/docs/scope-functions.html) and [here](https://stackoverflow.com/questions/45977011/example-of-when-should-we-use-run-let-apply-also-and-with-on-kotlin)
-
 * **Difference between List and Array types in Kotlin** - [Learn from here](https://stackoverflow.com/questions/36262305/difference-between-list-and-array-types-in-kotlin)
 
 * **What are `Labels` in Kotlin?** - [Learn from here](https://www.linkedin.com/posts/outcomeschool_outcomeschool-softwareengineer-tech-activity-7305796789159215105-oEUj)
-
-* **What are Coroutines in Kotlin?** - [Learn from here](https://outcomeschool.com/blog/kotlin-coroutines)
-
-* **What is Coroutine Scope?** - [Learn from here](https://outcomeschool.com/blog/kotlin-coroutines)
-
-* **Scopes in Kotlin Coroutines Used in Android** - [Learn from here](https://www.linkedin.com/posts/amit-shekhar-iitbhu_softwareengineer-androiddev-android-activity-7278639980053217280-8eZO)
-
-* **What is Coroutine Context?** - [Learn from here](https://outcomeschool.com/blog/coroutinecontext-in-kotlin)
+    - Labels in Kotlin: In Kotlin, labels are identifiers used to name a point in the code to enable more control over breaks, continues, and returns in nested loops and lambdas.
 
 * **Launch vs Async in Kotlin Coroutines** - [Learn from here](https://outcomeschool.com/blog/launch-vs-async-in-kotlin-coroutines)
 
