@@ -370,16 +370,21 @@ Android Interview Questions and Answers:
 * **What does ?: do in Kotlin? (Elvis Operator)** - [Learn from here](https://www.linkedin.com/posts/amit-shekhar-iitbhu_softwareengineer-androiddev-android-activity-7269313270669295618-g6kJ)
 
 * **timeouts in Kotlin Coroutines** - [Learn from here](https://www.linkedin.com/posts/outcomeschool_softwareengineer-androiddev-android-activity-7265684677770846208-Ug0Y)
+    - withTimeout(long) {}
 
 * **How do you combine multiple coroutine results?** - [Learn from here](https://www.linkedin.com/posts/outcomeschool_softwareengineer-androiddev-android-activity-7267827335393873920-v6t3)
+    - awaitAll()
 
 * **How to Implement Debounce Using Coroutines?** - [Learn from here](https://www.linkedin.com/posts/amit-shekhar-iitbhu_softwareengineer-androiddev-android-activity-7285163906686164994-tOUK)
 
 * **Kotlin code snippet demonstrating how to run two coroutines in series and parallel** - [Learn from here](https://www.linkedin.com/posts/amit-shekhar-iitbhu_outcomeschool-softwareengineer-tech-activity-7297944609614139392-h9NZ/)
 
 * **yield in Kotlin Coroutines** - [Learn from here](https://www.linkedin.com/posts/amit-shekhar-iitbhu_outcomeschool-softwareengineer-tech-activity-7298934394113638400-ZY-y)
+    - Suspends this coroutine and immediately schedules it for further execution. A coroutine runs uninterrupted on a thread until the coroutine suspends, giving other coroutines a chance to use that thread for their computations. Normally, coroutines suspend whenever they wait for something to happen: for example, trying to receive a value from a channel that's currently empty will suspend. Sometimes, a coroutine does not need to wait for anything, but we still want it to give other coroutines a chance to run. 
 
 * **Delegates in Kotlin** - [Learn from here](https://www.linkedin.com/posts/amit-shekhar-iitbhu_outcomeschool-softwareengineer-tech-activity-7301107785302249474-WyDC)
+    - class delegation: delegating the implementation of an interface to another object
+    - property delegation: delegating the getter/setter logic of a property to be a helper object
 
 ### Android
 
