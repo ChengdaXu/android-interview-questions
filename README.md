@@ -350,10 +350,6 @@ Android Interview Questions and Answers:
 
 * **How to create a Singleton class in Kotlin?** - [Learn from here](https://www.linkedin.com/posts/amit-shekhar-iitbhu_outcomeschool-softwareengineer-tech-activity-7297112198252806144-97Eh)
 
-* **`apply` scope function and its use cases** - [Learn from here](https://www.linkedin.com/posts/amit-shekhar-iitbhu_outcomeschool-softwareengineer-tech-activity-7302625113240154114-GNgz)
-
-* **`let` scope function and its use cases** - [Learn from here](https://www.linkedin.com/posts/outcomeschool_outcomeschool-softwareengineer-tech-activity-7297672603203223552-_9zp)
-
 * **Explain the use-case of `let`, `run`, `with`, `also`, `apply` in Kotlin.** - Learn from [here](https://kotlinlang.org/docs/scope-functions.html) and [here](https://stackoverflow.com/questions/45977011/example-of-when-should-we-use-run-let-apply-also-and-with-on-kotlin)
 
 * **Difference between List and Array types in Kotlin** - [Learn from here](https://stackoverflow.com/questions/36262305/difference-between-list-and-array-types-in-kotlin)
@@ -361,13 +357,13 @@ Android Interview Questions and Answers:
 * **What are `Labels` in Kotlin?** - [Learn from here](https://www.linkedin.com/posts/outcomeschool_outcomeschool-softwareengineer-tech-activity-7305796789159215105-oEUj)
     - Labels in Kotlin: In Kotlin, labels are identifiers used to name a point in the code to enable more control over breaks, continues, and returns in nested loops and lambdas.
 
-* **Launch vs Async in Kotlin Coroutines** - [Learn from here](https://outcomeschool.com/blog/launch-vs-async-in-kotlin-coroutines)
-
-* **Thread.sleep() vs delay() in Kotlin** - [Learn from here](https://x.com/amitiitbhu/status/1812806101944946962)
-
 * **Explain inline classes in Kotlin** - [Learn from here](https://www.linkedin.com/posts/amit-shekhar-iitbhu_outcomeschool-softwareengineering-tech-activity-7251812269804724224-TR6Y)
+    - Create lightweight wrappers around a single value, offering type safety without performance overhead
+    - It does it without performance overhead by replacing instances of the inline class with the underlying value, eliminating the need for object allocation, and improving performance.
+    - They are declared using the inline keyword and can have only one property. Check the code snippet.
 
 * **When to use Kotlin sealed classes?** - [Learn from here](https://kotlinlang.org/docs/sealed-classes.html)
+    - Sealed classes and interfaces provide controlled inheritance of your class hierarchies. All direct subclasses of a sealed class are known at compile time. No other subclasses may appear outside the module and package within which the sealed class is defined
 
 * **Tell about the Collections in Kotlin** - [Learn from here](https://kotlinlang.org/docs/collections-overview.html)
 
@@ -376,8 +372,6 @@ Android Interview Questions and Answers:
 * **timeouts in Kotlin Coroutines** - [Learn from here](https://www.linkedin.com/posts/outcomeschool_softwareengineer-androiddev-android-activity-7265684677770846208-Ug0Y)
 
 * **How do you combine multiple coroutine results?** - [Learn from here](https://www.linkedin.com/posts/outcomeschool_softwareengineer-androiddev-android-activity-7267827335393873920-v6t3)
-
-* **What is a Job in Coroutines?** - [Learn from here](https://www.linkedin.com/posts/amit-shekhar-iitbhu_softwareengineer-androiddev-android-activity-7268842850140721153-vw9E)
 
 * **How to Implement Debounce Using Coroutines?** - [Learn from here](https://www.linkedin.com/posts/amit-shekhar-iitbhu_softwareengineer-androiddev-android-activity-7285163906686164994-tOUK)
 
