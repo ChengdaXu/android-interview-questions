@@ -393,16 +393,36 @@ Android Interview Questions and Answers:
 #### Base
 
 * **Why does an Android App lag?** - [Learn from here](https://outcomeschool.com/blog/android-app-lag)
+    - Android app updates UI every 16ms (1000ms / 60fps)
+    - If any main thread task takes more than 16ms, there will be a frame drop
+    - GC runs too frequently, probably due to memory leak
+    - Doing too much work on the main thread
 
 * **What is `Context`? How is it used?** - [Context In Android Application](https://outcomeschool.com/blog/context-in-android-application)
+    - In Android, a Context object provides information about the current application environment. It allows you to interact with the system services, resources, and other application components.
+    - Use application context for singleton, e.g a database object
+    - Use activity context for UI operation, e.g showing a toast. Otherwise app will crash.
+    - Application context won't respect locale changes until the app is restarted
 
 * **Tell all the Android application components.** - [Learn from here](https://www.linkedin.com/posts/outcomeschool_outcomeschool-softwareengineer-tech-activity-7302543942028251137-S3vJ)
+    - Activity: it represents a single screen with a user interface.
+    - Services: a Service is a component that runs in the background to perform long-running operations or handle tasks without a UI. For example, playing music or downloading a file can be managed by a Service. It doesn’t interact directly with the user but can communicate with other components.
+    - Broadcast receivers: a Broadcast Receiver listens for system-wide broadcast announcements or events, such as a low battery warning, a new SMS, or a custom event from another app.
+    - Content providers: It manages data sharing between different applications. Example: Sharing contacts or accessing media files from the gallery. For app internal data, we can use MVVM + repository
+    - Intents
+        - Explicity intents: target a specific component (e.g launching a known activity)
+        - Implicit intents: declare an action (e.g share a file) and let the system resolve it
 
 * **What is the project structure of an Android Application?** - [Learn from here](https://www.linkedin.com/posts/outcomeschool_android-app-project-structure-activity-7302902092812226560-bM8D)
 
 * **What is `AndroidManifest.xml`?** - [Learn from here](https://www.linkedin.com/posts/outcomeschool_outcomeschool-softwareengineer-tech-activity-7305255303908888576-c0Nf)
 
 * **What is the `Application` class?** -[Learn from here](https://www.linkedin.com/posts/outcomeschool_outcomeschool-softwareengineer-tech-activity-7304864185010528256-2GGU)
+    - global representation of an app's process.
+    - use cases
+        - initialize libraries
+        - maintain global application state (single instances)
+        - setting up DI
   
 #### Activity and Fragment
 
@@ -413,16 +433,28 @@ Android Interview Questions and Answers:
 * **What is the difference between onCreate() and onStart()** - [Learn from here](https://developer.android.com/guide/components/activities/activity-lifecycle)
 
 * **When only onDestroy is called for an activity without onPause() and onStop()?** - [Learn from here](https://www.youtube.com/watch?v=B2kY_ckZa-g)
+    - when we explicitly call activity.finish()
 
 * **Why do we need to call setContentView() in onCreate() of Activity class?** - [Learn from here](https://www.youtube.com/watch?v=U1aHAt7XC5I)
+    - setContentView(): inflate the UI layout
+    - why: onCreate is called exactly once
 
 * **What is onSaveInstanceState() and onRestoreInstanceState() in activity?** - [Learn from here](https://www.linkedin.com/posts/outcomeschool_outcomeschool-softwareengineer-tech-activity-7301985158608392193-pA5M)
+    - onSaveInstanceState(): called before the activity is destroyed or recreated
+    - onRestoreInstanceState(): called between onStart() and onResume()
 
 * **What is `Fragment` and its lifecycle?** - [Learn from here](https://developer.android.com/guide/fragments/lifecycle)
 
 * **What are "launchMode"?** - [Learn from here](https://outcomeschool.com/blog/singletask-launchmode-in-android) and [singleTask launchMode in Android](https://youtu.be/WYkQEnm4jeI)
+    - We use launchMOde to give instructions to the Android OS about how to launch the activity
+    - standard (default): Creates a new instance of the activity every time it’s launched, even if the same activity is already in the stack.
+    - singleTask: if the activity exists, bring it back to the goreground and clears all activities above it.
+        - use case: Main entry point
 
 * **What is the difference between a `Fragment` and an `Activity`? Explain the relationship between the two.** - [Learn from here](https://stackoverflow.com/questions/10478233/why-fragments-and-when-to-use-fragments-instead-of-activities)
+    - Purpose: activity represents a single screen with a UI. Fragment represents a reusable portion of a UI
+    - Fragment can be used for dynamic UIs (e.g tabs, bottom navigation)
+    - Fragment is more light-weight 
 
 * **When should you use a Fragment rather than an Activity?**
     - When you have some UI components to be used across various activities
@@ -433,12 +465,29 @@ Android Interview Questions and Answers:
     - FragmentStatePagerAdapter: Here, the fragment instance will be destroyed when it is not visible to the user, except the saved state of the fragment.
 
 * **What is the difference between adding/replacing fragment in backstack?** - [Learn from here](https://stackoverflow.com/questions/24466302/basic-difference-between-add-and-replace-method-of-fragment/24466345)
+    - Add
+        - Behavior:
+            - Adds a new fragment on top of existing fragments in the container.
+            - Existing fragments remain in the container but are hidden (not destroyed).
+        - Back Stack:
+            - If added to the back stack (addToBackStack("tag")), pressing the back button pops the added fragment and reveals the previous fragment(s).
+    - replace
+        - Behavior:
+            - Removes all existing fragments in the container and adds the new fragment.
+            - Previous fragments are destroyed (unless the transaction is added to the back stack).
+        - Back Stack:
+            - If added to the back stack, pressing the back button reverts the transaction, restoring the previous fragments.
 
 * **How would you communicate between two Fragments?**
+    - Use a ViewModel scoped to the host activity. Both fragments observe the same ViewModel instance.
+    - Use the fragment result Api
 
 * **What is retained `Fragment`?** - [Learn from here](https://www.linkedin.com/posts/outcomeschool_softwareengineer-androiddev-android-activity-7265620144289193984-hlpH)
+    - A Retained Fragment in Android is a special type of fragment that is not destroyed when its host activity is recreated due to configuration changes (e.g. screen rotation, language change). It retains its instance and data across activity recreation, making it useful for preserving state or continuing background tasks.
+    - Deprecated in favor of ViewModel
 
 * **What is the purpose of `addToBackStack()` while commiting fragment transaction?**
+    - A Fragment Transaction in Android is a mechanism that allows you to perform a series of operations (like adding, removing, replacing, or hiding Fragments) as a single, atomic unit.
     - By calling addToBackStack(), the replace transaction is saved to the back stack so the user can reverse the transaction and bring back the previous fragment by pressing the Back button. For more [Learn from here](https://stackoverflow.com/questions/22984950/what-is-the-meaning-of-addtobackstack-with-null-parameter)
 
 #### Views and ViewGroups
