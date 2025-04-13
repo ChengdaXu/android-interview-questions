@@ -586,10 +586,27 @@ Android Interview Questions and Answers:
 #### Dialogs and Toasts
 
 * **What is `Dialog` in Android?** - [Learn from here](https://developer.android.com/guide/topics/ui/dialogs)
+    - A dialog is a small window that prompts the user to make a decision or enter additional information. A dialog doesn't fill the screen and is normally used for modal events that require users to take an action before they can proceed.
+        - AlertDialog
+        - DatePickerDialog/TimePickerDialog  
 
 * **What is `Toast` in Android?** - [Learn from here](https://developer.android.com/guide/topics/ui/notifiers/toasts)
+    - A toast provides simple feedback about an operation in a small popup.
+    - Toast vs snackbar
+        - Toast doesn't have user-actionable options while snackbar does 
 
 * **What the difference between `Dialog` and `Dialog Fragment`?** - [Learn from here](https://stackoverflow.com/questions/7977392/android-dialogfragment-vs-dialog)
+| **Aspect**               | **DialogFragment**                          | **AlertDialog**                      |
+|--------------------------|---------------------------------------------|--------------------------------------|
+| **Lifecycle Management** | Managed as a `Fragment` (properly tied to Activity/Fragment lifecycle). | Tied directly to Activity context (risk of leaks if not dismissed manually). |
+| **Reusability**          | Reusable across Activities/Fragments.       | Tightly coupled to the context it’s created in. |
+| **Customization**         | Supports full UI customization via `onCreateView` (e.g., custom layouts). | Limited to pre-defined dialog styles, buttons, and text. |
+| **Backstack Integration**| Can be added to Fragment backstack (dismissed with back button). | No native backstack support. |
+| **Configuration Changes**| Automatically survives screen rotation/configuration changes. | Dismissed on configuration changes; requires manual state restoration. |
+| **Risk of Leaks**         | Low (lifecycle-aware, auto-dismisses).      | High (holds Activity reference; leaks if not dismissed before Activity destruction). |
+| **Material Design**       | Integrates with `MaterialAlertDialogBuilder` for modern styling. | Requires manual theming; less consistent with Material 3. |
+| **Use Case**              | Complex UIs, forms, reusable dialogs.       | Simple, one-off alerts with minimal interaction. |
+| **Context Handling**      | Uses `Fragment` context safely.             | Directly references Activity context (leak-prone). |
 
 #### Intents and Broadcasting
 
