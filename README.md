@@ -493,10 +493,14 @@ Android Interview Questions and Answers:
 #### Views and ViewGroups
 
 * **Optimizing layouts in Android** - [Learn from here](https://www.linkedin.com/posts/amit-shekhar-iitbhu_softwareengineer-androiddev-android-activity-7269208182390951936-dAg3)
+    - ViewStub: A ViewStub in Android is an invisible, zero-sized View used for lazy inflation of layouts. It acts as a placeholder for a layout resource, delaying its inflation until explicitly requested, which improves performance by reducing initial layout overhead. 
 
 * **What is `View` in Android?**
+    - View is the fundamental building block for creating user interface (UI) components.
 
 * **Difference between `View.GONE` and `View.INVISIBLE`?** - [Learn from here](https://stackoverflow.com/questions/11556607/android-difference-between-invisible-and-gone)
+    - View.GONE: This view is invisible, and it doesn't take any space for layout purposes.
+    - View.INVISIBLE: This view is invisible, but it still takes up space for layout purposes.
 
 * **Can you a create custom view? How?**
 
@@ -505,14 +509,22 @@ Android Interview Questions and Answers:
     - ViewGroup: ViewGroup is the invisible container. It holds View and ViewGroup. For example, LinearLayout is the ViewGroup that contains Button(View), and other Layouts also. ViewGroup is the base class for Layouts.
 
 * **What is a Canvas?** - [Learn from here](https://www.linkedin.com/posts/pallavi-shekhar_androiddev-android-activity-7301608732671520771-7WLF)
+    - In Android development, a Canvas is a class that provides a drawing surface for 2D graphics. It’s part of the Android graphics framework and is used to draw shapes, text, images, and other visual elements directly onto a view or a bitmap.
+    - Canvas vs bitmap: canvas is drawing tool while the Bitmap is the paper which holds the actual pixels
 
 * **What is a `SurfaceView`?** - [Learn from here](https://developer.android.com/reference/android/view/SurfaceView)
+    - A SurfaceView in Android is a specialized view that provides a dedicated drawing surface for rendering high-performance graphics, video, or animations outside the main UI thread. It’s ideal for scenarios requiring frequent or complex updates (e.g., games, camera previews, video playback).
 
 * **Relative Layout vs Linear Layout.**
 
 * **Tell about Constraint Layout optimization** - [Learn from here](https://www.linkedin.com/posts/outcomeschool_constraintlayout-in-android-uses-the-cassowary-activity-7303624644165545993-xUBG)
 
 * **Do you know what is the view tree? How can you optimize its depth?** - [Learn from here](https://developer.android.com/reference/android/view/ViewTreeObserver)
+    - The view tree represents the hierarchical structure of UI components (views and view groups) that make up an activity or fragment.
+    - How to optimize
+        - Use efficient layout, e.g ConstrainLayout
+        - Remove redundant container
+        - defer loaidng with ViewStub
 
 #### Displaying Lists of Content
 
