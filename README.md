@@ -596,6 +596,7 @@ Android Interview Questions and Answers:
         - Toast doesn't have user-actionable options while snackbar does 
 
 * **What the difference between `Dialog` and `Dialog Fragment`?** - [Learn from here](https://stackoverflow.com/questions/7977392/android-dialogfragment-vs-dialog)
+
 | **Aspect**               | **DialogFragment**                          | **AlertDialog**                      |
 |--------------------------|---------------------------------------------|--------------------------------------|
 | **Lifecycle Management** | Managed as a `Fragment` (properly tied to Activity/Fragment lifecycle). | Tied directly to Activity context (risk of leaks if not dismissed manually). |
