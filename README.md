@@ -531,28 +531,57 @@ Android Interview Questions and Answers:
 * **What is the difference between `ListView` and `RecyclerView`?** - [Learn from here](https://stackoverflow.com/questions/26728651/recyclerview-vs-listview)
 
 * **How does the RecyclerView work?** - [Learn from here](https://www.linkedin.com/posts/outcomeschool_softwareengineer-androiddev-android-activity-7268187299811606528-u2_w)
+    - Reuses (recycles) off-screen views to minimize memory usage and improve performance.
 
 * **RecyclerView Optimization - Scrolling Performance Improvement** - [Learn from here](https://outcomeschool.com/blog/recyclerview-optimization)
+    - Use optimized image loading library:
+        - use bitmap pool to reduce GC overhead: we maintain a collection of unused bitmaps. When we need to create a new bitmap, we first check if there is a bitmap unused in the pool which has the same of larger size. If so, we can reuse that bitmap object
+        - cancel image loading when it's no longer necessary
+        - downsampling: pass the view when creating the image loading request to get view size info. Assume that we have an image of size 2000*2000, but the view size is 400*400. So why load an image of 2000*2000, Glide down-samples the bitmap to 400*400, and then show it into the view.
+    - set image width and height
+    - use notify item RecyclerView APi
+    - avoid a nested view 
 
 * **Optimizing Nested RecyclerView** - [Learn from here](https://outcomeschool.com/blog/setrecycledviewpool-for-optimizing-nested-recyclerview)
+    - setRecycledViewPool so nested recyclerView can share there view pool
 
 * **How does RecyclerView improve performance over ListView?**
 
 * **What are the components of a RecyclerView?**
+    - Adapter: Bridges the dataset and the UI by creating and binding views to data items.
+    - ViewHolder: Holds references to UI elements (views) for a single list item to avoid repetitive findViewById() calls.
+    - LayoutManager: Determines how items are arranged and displayed (e.g., list, grid, staggered grid).
+    - ItemDecoration: Adds visual decorations (e.g., dividers, spacing) between items.
+    - ItemAnimator: Handles animations for item changes (add, remove, update).
+    - notifyDataSetChanged is inefficient because it forces the entire dataset to be treated as "changed"
+        - Use DiffUtil
+        - Use ListAdapter to automate DiffUtil handling
 
 * **Explain the role of RecyclerView.Adapter and RecyclerView.ViewHolder** - [Learn from here](https://www.linkedin.com/posts/outcomeschool_softwareengineer-androiddev-android-activity-7274733205927182337-hvTG)
 
 * **What is a LayoutManager in RecyclerView?**
 
 * **How do you handle multiple view types in a single RecyclerView?**
+    - Override getItemViewType()
 
 * **What is DiffUtil and how does it improve RecyclerView performance?** - [Learn from here](https://www.linkedin.com/posts/amit-shekhar-iitbhu_softwareengineer-androiddev-android-activity-7279435764973686785-pfiQ)
+    - DiffUtil is a utility class that efficiently calculates the differences between two lists and updates only the items that have changed in the RecyclerView. By minimizing unnecessary updates, it reduces the workload on the RecyclerView, enhancing performance and ensuring a smoother user experience.
+    - Only the items that actually changed are updated.
+    - It performs its calculations on a background thread by default.
+    - Instead of manually tracking changes and calling specific notify methods (notifyItemChanged, notifyItemInserted, etc), it handles all the complexity of determining and applying the changes.
+    - areItemsTheSame: Determines if two items represent the same logical entity (e.g., the same user, post, or product)
+    - areContentsTheSame: Checks if the content/data of the two items is identical (i.e., no UI update needed).
 
 * **What is the purpose of RecyclerView.setHasFixedSize(true)?** - [Learn from here](https://www.linkedin.com/posts/amit-shekhar-iitbhu_softwareengineer-androiddev-android-activity-7282252857637007361-thzv/)
+    - optimize the performance of a RecyclerView when the size of its layout does not change based on the adapter's content. This allows the RecyclerView to avoid unnecessary layout recalculations and re-measurements when data changes, leading to smoother scrolling and better performance.
 
 * **How do you update a specific item in RecyclerView?**
+    - notifyItemChanged(position)
 
 * **What is `SnapHelper`?** - Learn from here: [SnapHelper](https://outcomeschool.com/blog/snaphelper)
+    - a helper class that helps in snapping any child view of the RecyclerView
+    - LinearSnapHelper: intended for smaller items and snaps the center of the target child view to the center of the RecyclerView
+    - PagerSnapHelper: intended for full-screen items and behaves similarly to a ViewPager:
 
 #### Dialogs and Toasts
 
