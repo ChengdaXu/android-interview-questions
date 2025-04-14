@@ -732,20 +732,18 @@ Android Interview Questions and Answers:
     - AsyncTask was a helper class in Android (now deprecated) that enabled background thread operations and UI thread updates without directly managing threads. It was commonly used for short background tasks (like network calls or database operations) that needed to update the UI.
 
 * **What are the problems in AsyncTask?**
-1. **Memory Leaks**  
-   - Could retain strong references to activities or fragments even after they were destroyed, leading to memory leaks.
-
-2. **Configuration Changes**  
-   - Poor handling of device configuration changes (e.g., screen rotation). Background tasks continued running even if the associated UI component was recreated, causing potential crashes or stale UI updates.
-
-3. **Threading Issues**  
-   - Default behavior used a single-threaded executor, leading to serial execution of tasks and potential performance bottlenecks.  
-   - Mixing background work with UI updates often resulted in complex error-prone code.
-
-4. **Better Alternatives**  
-   - Modern solutions like [Kotlin Coroutines](https://developer.android.com/kotlin/coroutines), `ExecutorService`, and [WorkManager](https://developer.android.com/topic/libraries/architecture/workmanager) provide safer, more efficient threading models with built-in lifecycle awareness.
-
-> ⚠️ **Note**: AsyncTask is no longer recommended for new projects. Use modern alternatives like coroutines or `WorkManager` instead.
+    1. **Memory Leaks**  
+       - Could retain strong references to activities or fragments even after they were destroyed, leading to memory leaks.
+    
+    2. **Configuration Changes**  
+       - Poor handling of device configuration changes (e.g., screen rotation). Background tasks continued running even if the associated UI component was recreated, causing potential crashes or stale UI updates.
+    
+    3. **Threading Issues**  
+       - Default behavior used a single-threaded executor, leading to serial execution of tasks and potential performance bottlenecks.  
+       - Mixing background work with UI updates often resulted in complex error-prone code.
+    
+    4. **Better Alternatives**  
+       - Modern solutions like [Kotlin Coroutines](https://developer.android.com/kotlin/coroutines), `ExecutorService`, and [WorkManager](https://developer.android.com/topic/libraries/architecture/workmanager) provide safer, more efficient threading models with built-in lifecycle awareness.
 
 * **Daemon Threads vs. User Threads** - [Learn from here](https://x.com/amitiitbhu/status/1817783254885478872)
 
