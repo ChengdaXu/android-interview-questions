@@ -612,36 +612,86 @@ Android Interview Questions and Answers:
 #### Intents and Broadcasting
 
 * **What is `Intent`?** - [Learn from here](https://developer.android.com/guide/components/intents-filters)
+    - An Intent is a messaging object you can use to request an action from another app component
+    - Fundamental use cases:
+        - Starting an activity
+        - Starting a service
+        - Deliver a broadcast 
 
-* **What is an Implicit `Intent`?** - [Learn from here](https://developer.android.com/guide/components/intents-filters)
-        
-* **What is an Explicit `Intent`?** - [Learn from here](https://developer.android.com/guide/components/intents-filters)
+* **Implicit `Intent` vs  Explicit `Intent`?** - [Learn from here](https://developer.android.com/guide/components/intents-filters)
+    - Explicity intents: target a specific component (e.g launching a known activity)
+    - Implicit intents: declare an action (e.g share a file) and let the system resolve it
 
 * **What is a `BroadcastReceiver`?** - [Learn from here](https://developer.android.com/guide/components/broadcasts)
 
 * **What is a Sticky `Intent`?**
+    - Sticky Intent refers to a type of Android broadcast intent that remains accessible in the system even after it has been sent and processed.
+    - Sticky intents "stick around" in the system, retaining their data after being broadcast. New components (e.g., apps or services) that register to receive this intent later can immediately retrieve the last sent value.
+    - Primarily used for system state updates, such as battery level, connectivity status, or time zone changes. For example, if an app starts after a sticky battery-level update was sent, it can still fetch the latest battery status.
     - Sticky Intents allows communication between a function and a service. sendStickyBroadcast() performs a sendBroadcast(Intent) known as sticky, i.e. the Intent you are sending stays around after the broadcast is complete, so that others can quickly retrieve that data through the return value of registerReceiver(BroadcastReceiver, IntentFilter). For example, if you take an intent for ACTION_BATTERY_CHANGED to get battery change events: When you call registerReceiver() for that action — even with a null BroadcastReceiver — you get the Intent that was last Broadcast for that action. Hence, you can use this to find the state of the battery without necessarily registering for all future state changes in the battery.
 
 * **Describe how broadcasts and intents work to be able to pass messages around your app?** - [Learn from here](https://stackoverflow.com/questions/7276537/using-a-broadcast-intent-broadcast-receiver-to-send-messages-from-a-service-to-a)
+    - Register broadcast receiver in the activity 
 
 * **What is a `PendingIntent`?**
-    - If you want someone to perform any Intent operation at future point of time on behalf of you, then we will use Pending Intent.
+    - A PendingIntent is a powerful Android mechanism that allows one app to delegate a specific action (like starting an Activity, Service, or sending a Broadcast) to another app, while retaining the original app's permissions and identity. It acts as a "token" that another process can use to execute predefined actions on behalf of your app, even if your app is not running.
+    - Common use case:
+        - Triggering actions from notifications (e.g., opening an Activity when a notification is tapped).
+        - Scheduling future tasks with AlarmManager.
+        - Handling app widgets (e.g., a button click on a widget). 
 
 * **What are the different types of Broadcasts?** - [Learn from here](https://developer.android.com/guide/components/broadcasts)
+    - context-registered receiver: dynamically register a receiver during an activity/fragment/application's lifecycle
+    - manifest-declared receiver: the system can start the app and deliver the broadcast even if the app is not running
+    - Prefer context-registered unless manifest-declared receiver is absolutely necessary
 
 #### Services
 
 * **Explain Android Service Lifecycle** - [Learn from here](https://www.linkedin.com/posts/amit-shekhar-iitbhu_softwareengineer-androiddev-android-activity-7265212180570992640-CJn_)
+    - onCreate: when the service is created for the first time
+    - onStartCommand: called each time when your service using startService()
+    - onBind: called when a client explicitly binds to the service by calling bindService
+    - onUnbind: called when all clients have unbound from the service (after the last unbindService call)
+    - onDestroy: when the service is no longer used and is being destroyed
 
 * **What is Service?** - [Learn from here](https://developer.android.com/guide/components/services)
+    - bind: you can bind a service with app components so they can communicate directly with each other
+    - foreground/background: or you can start it by calling startService() and then stop it manually
 
 * **On which thread does a Service run in Android?** - [Learn from here](https://www.linkedin.com/posts/amit-shekhar-iitbhu_softwareengineer-androiddev-android-activity-7283717741130215424-Vn39)
+    - Service runs on the main thread by default
+    - If you need to perform a long-running task, you must create a separate thread using Thread/Coroutine etc within the service
+    - IntentService runs on a background thread automatically. It creates a worker thread to handle the intents, so you don’t have to manage threading manually.
 
 * **Service vs IntentService** - [Learn from here](https://stackoverflow.com/questions/15524280/service-vs-intentservice-in-the-android-platform)
+    - limitations
+        - The service may block the main thread
+        - The IntentService cannot run tasks in parallel. Hence all the consecutive intents will go into the message queue for the worker thread and will execute sequentially.
+
+* **Background tasks** - Learn from here](https://developer.android.com/develop/background-work/background-tasks)
+    - asynchronous work
+        - concurrent operation, e.g time consuming calculation
+        - use Kotlin coroutine
+        - not guranteed to finish if the app stops being in a valid lifecycle stage (for example, if the app leaves the foreground). 
+    - task scheduling APIs
+        - do tasks that need to continue even if the user leaves the app.
+        - WorkManager/JobSceduler. You can use WorkManager to schedule tasks to run at specific times, or specify the conditions when the task should run. You can even set up chains of tasks, so each task runs in turn, passing its results to the next one.
+        - common senarios:
+            - Fetching data from server periodically
+            - Fetching sensor data (for example, step counter data)
+            - Getting periodic location data (you must be granted ACCESS_BACKGROUND_LOCATION permission on Android 10 or higher)  
+    - foreground services
+    - alternative APIs
+    - [tasks initiated by the user](https://developer.android.com/develop/background-work/background-tasks#user-initiated)
+    - [Tasks in response to an event](https://developer.android.com/develop/background-work/background-tasks#event-driven)
 
 * **What is a Foreground Service?** - [Learn from here](https://www.linkedin.com/posts/outcomeschool_foreground-service-in-android-activity-7303268432030879745-TFVI)
+    - a type of service that performs tasks noticeable to the user and must display a persistent notification (that cannot be dismissed) while running
+    - unlike background services, foreground services are less likely to be killed by the system when resources are low because they are consisder a higher priority due to their direct interaction with the user
+    - e.g Music playbck, location tracking, file transfer
 
 * **What is a `JobScheduler`?** - [Learn from here](https://developer.android.com/reference/android/app/job/JobScheduler)
+    - Schedule background jobs that run under specific conditions (e.g., network availability, charging state).
 
 #### Inter-process Communication
 
