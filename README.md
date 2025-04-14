@@ -697,24 +697,55 @@ Android Interview Questions and Answers:
 #### Inter-process Communication
 
 * **How can two distinct Android apps interact?** - [Learn from here](https://developer.android.com/training/basics/intents)
+    - Send the user to another app via implicit intents
+    - Get a result from an activity
+        - e.g your app can start a camera app and receive the captured photo as a result.
+        - prefer the Activity Result APIs over `startActivityForResult()` and `onActivityResult()`
+        - When starting an activity for a result, it is possible—and, in cases of memory-intensive operations such as camera usage, almost certain—that your process and your activity will be destroyed due to low memory.
+    - Allow other apps to start your activity
+        - Define intent filter in AndroidManifest
+        - Check intent in onCreate() 
 
 * **Is it possible to run an Android app in multiple processes? How?** - [Learn from here](https://stackoverflow.com/questions/6567768/how-can-an-android-application-have-more-than-one-process)
+    - specify android:process=":${remoteProcessName}" in your manifest to have an activity/service run in a seperate process. The "remote" is just the name of the remote process, and you can call it whatever you want. If you want several activities/services to run in the same process, just give it the same name.
 
 * **What is AIDL? Enumerate the steps in creating a bounded service through AIDL.** - [Learn from here](https://developer.android.com/guide/components/aidl)
 
 * **What can you use for background processing in Android?** - [Learn from here](https://developer.android.com/guide/background)
 
 * **What is a `ContentProvider` and what is it typically used for?** - [Learn from here](https://www.linkedin.com/posts/outcomeschool_softwareengineer-androiddev-android-activity-7268117553040764931-64fI)
+    - A ContentProvider in ANdroid is a component that manages and shares application data across different apps or components securely. It provides an abstraction layer for accessing data from another app or within the same app, regardless of the underlying storage mechanism like databases, files, or network sources. This enables controlled and standardized data sharing between applications.
+    - Use cases
+        - The contacts app provides a ContentProvider to allow other apps to access or modify contact information
+        - The MediaStore ContentProvider allow access to media files like images, videos, and audio stored on the device.
+        - Developers can create their own COntentProvider to share app-specific data. 
 
 #### Long-running Operations
 
 * **How to run parallel tasks and get a callback when all are complete?** - [Long-running tasks in parallel with Kotlin Flow](https://outcomeschool.com/blog/long-running-tasks-in-parallel-with-kotlin-flow)
 
-* **What is ANR? How can the ANR be prevented?** - [Learn from here](https://developer.android.com/topic/performance/vitals/anr.html)
+* **What is ANR? How can the ANR be prevented?** - [Learn from here](https://developer.android.com/topic/performance/vitals/anr.html
+    - When the UI thread of an Android app is blocked for too long, an "Application Not Responding" (ANR) error is triggered. If the app is in the foreground, the system displays a dialog to the user, as shown in figure 1. The ANR dialog gives the user the opportunity to force quit the app.
+    - ANRs are a problem because the app's main thread, which is responsible for updating the UI, can't process user input events or draw, causing frustration to the user.
 
 * **What is an `AsyncTask`(Deprecated in API level 30) ?**
+    - AsyncTask was a helper class in Android (now deprecated) that enabled background thread operations and UI thread updates without directly managing threads. It was commonly used for short background tasks (like network calls or database operations) that needed to update the UI.
 
 * **What are the problems in AsyncTask?**
+1. **Memory Leaks**  
+   - Could retain strong references to activities or fragments even after they were destroyed, leading to memory leaks.
+
+2. **Configuration Changes**  
+   - Poor handling of device configuration changes (e.g., screen rotation). Background tasks continued running even if the associated UI component was recreated, causing potential crashes or stale UI updates.
+
+3. **Threading Issues**  
+   - Default behavior used a single-threaded executor, leading to serial execution of tasks and potential performance bottlenecks.  
+   - Mixing background work with UI updates often resulted in complex error-prone code.
+
+4. **Better Alternatives**  
+   - Modern solutions like [Kotlin Coroutines](https://developer.android.com/kotlin/coroutines), `ExecutorService`, and [WorkManager](https://developer.android.com/topic/libraries/architecture/workmanager) provide safer, more efficient threading models with built-in lifecycle awareness.
+
+> ⚠️ **Note**: AsyncTask is no longer recommended for new projects. Use modern alternatives like coroutines or `WorkManager` instead.
 
 * **Daemon Threads vs. User Threads** - [Learn from here](https://x.com/amitiitbhu/status/1817783254885478872)
 
