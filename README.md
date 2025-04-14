@@ -732,32 +732,64 @@ Android Interview Questions and Answers:
     - AsyncTask was a helper class in Android (now deprecated) that enabled background thread operations and UI thread updates without directly managing threads. It was commonly used for short background tasks (like network calls or database operations) that needed to update the UI.
 
 * **What are the problems in AsyncTask?**
-    1. **Memory Leaks**  
-       - Could retain strong references to activities or fragments even after they were destroyed, leading to memory leaks.
-    
-    2. **Configuration Changes**  
-       - Poor handling of device configuration changes (e.g., screen rotation). Background tasks continued running even if the associated UI component was recreated, causing potential crashes or stale UI updates.
-    
-    3. **Threading Issues**  
+    - **Memory Leaks**: Could retain strong references to activities or fragments even after they were destroyed, leading to memory leaks.
+    - **Configuration Changes** : Poor handling of device configuration changes (e.g., screen rotation). Background tasks continued running even if the associated UI component was recreated, causing potential crashes or stale UI updates.
+    - **Threading Issues**  
        - Default behavior used a single-threaded executor, leading to serial execution of tasks and potential performance bottlenecks.  
        - Mixing background work with UI updates often resulted in complex error-prone code.
-    
-    4. **Better Alternatives**  
+    - **Better Alternatives**  
        - Modern solutions like [Kotlin Coroutines](https://developer.android.com/kotlin/coroutines), `ExecutorService`, and [WorkManager](https://developer.android.com/topic/libraries/architecture/workmanager) provide safer, more efficient threading models with built-in lifecycle awareness.
 
 * **Daemon Threads vs. User Threads** - [Learn from here](https://x.com/amitiitbhu/status/1817783254885478872)
+    - User threads: standard threads in a program which perform the main taks of the application
+        - The JVM waits for all user threads to complete before exiting.
+        - Example: Main thread handling user interactions, threads performing important calculations, or processing critical data.
+    - Daemon Threads
+        - These are background service threads that perform tasks such as garbage collection, logging, and monitoring.
+        - The JVM does not wait for daemon threads to finish; they terminate when all user threads are finished.
+        - Example: Garbage collector thread.
 
 * **Explain `Looper`, `Handler`, and `HandlerThread`.**
-
+    - Looper:
+        - Purpose: Manages a message loop for a thread, allowing it to process tasks sequentially.
+        - Key points:
+            - By default, threads don’t have a message loop. The main thread (UI thread) has a Looper by default.
+            - A Looper continuously checks its MessageQueue for pending messages/runnables.
+            - prepare(): Initializes the Looper for the current thread.
+            - loop(): Starts processing messages from the queue (blocks the thread until quit() is called)
+    - Handler:
+        - Purpose: Sends and processes messages/runnables to a thread’s MessageQueue (via its Looper).
+        - Key points:
+            - Bound to a specific Looper (and thus a specific thread).
+            - Allows inter-thread communication (e.g., sending data from a background thread to the UI thread).
+            - e.g mainHandler.post(runnableToUpdateUi)
+    - HandlerThread: A Thread subclass with a built-in Looper to simplify background thread management.
+        - Automatically handles Looper setup (prepare() and loop()).
+        - Use its Looper to create a Handler tied to this thread.   
+     
 * **Android Memory Leak and Garbage Collection**
+    - A memory leak occurs when an object is no longer needed but is still referenced, preventing the garbage collector (GC) from reclaiming its memory. Over time, leaks can cause app slowdowns, crashes (e.g., OutOfMemoryError), and poor user experience.
+    - Common Causes of Memory Leaks
+        - Lifecycle Mismatches: Holding references to Android components (e.g., Activity, Fragment, View) after they’re destroyed.
+        - Static References: Static fields (e.g., static Context) outlive component lifecycles.
+        - Unregistered Listeners/Callbacks: Not unregistering broadcast receivers, event listeners, or callbacks in onDestroy().
+        - Anonymous Inner Classes: Anonymous Runnable, Handler, or Thread implicitly reference outer classes.
+        - Singletons with Context: Storing Activity context in long-lived singletons. 
 
 * **Can you explain the difference between a Runnable and a Thread in Android?** - [Learn from here](https://www.linkedin.com/posts/outcomeschool_softwareengineer-androiddev-android-activity-7279784055284420609-Xa8b)
+    - A Runnable is an interface in Java that defines a single method, run(), which is used to execute a task on a thread.
+    - A Thread is a Java class that represents a thread of execution, and it can be started and stopped independently of other threads.
+    - In Android, a Runnable can be used to execute code on a thread, while a Thread is a separate entity that can be started and stopped as needed. 
 
 #### Working With Multimedia Content
 
 * **How do you handle bitmaps in Android as it takes too much memory?** - [Learn from here](https://developer.android.com/topic/performance/graphics/load-bitmap) and [here](https://developer.android.com/topic/performance/graphics/manage-memory)
+    - check the dimensions of a bitmap before decoding it
+    - maybe load a scaled down version into memory, depending on the memory usage, image view size and screen size and density
+    - use memory and disk cache
 
 * **Tell about the `Bitmap` pool.** - [Learn from here](https://outcomeschool.com/blog/bitmap-pool)
+    - we maintain a collection of unused bitmaps. When we need to create a new bitmap, we first check if there is a bitmap unused in the pool which has the same of larger size. If so, we can reuse that bitmap object
 
 #### Data Saving
 
