@@ -657,6 +657,7 @@ Android Interview Questions and Answers:
 * **What is Service?** - [Learn from here](https://developer.android.com/guide/components/services)
     - bind: you can bind a service with app components so they can communicate directly with each other
     - foreground/background: or you can start it by calling startService() and then stop it manually
+    - You must declare all services in your application's manifest file
 
 * **On which thread does a Service run in Android?** - [Learn from here](https://www.linkedin.com/posts/amit-shekhar-iitbhu_softwareengineer-androiddev-android-activity-7283717741130215424-Vn39)
     - Service runs on the main thread by default
