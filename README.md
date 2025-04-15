@@ -794,26 +794,36 @@ Android Interview Questions and Answers:
 #### Data Saving
 
 * **Jetpack DataStore Preferences** - [Learn from here](https://outcomeschool.com/blog/jetpack-datastore-preferences)
+    - Jetpack DataStore is a new and improved data storage solution aimed at replacing SharedPreferences.
+    - when you access the SharedPreferences for the first time, it reads the whole file, brings the data in memory. This may happen in UI thread. If SharePrefence become too large, it may take more than 5 seconds and thus lead to ANR
+    - JetPack DataStore encourage you to use async operation to read the value with flow
 
 * **Persisting Data in an Android App** - [Learn from here](https://www.linkedin.com/posts/amit-shekhar-iitbhu_outcomeschool-softwareengineer-tech-activity-7301836718003888128-oNi2)
 
 * **What is ORM? How does it work?**
+    - ORM (Object-Relational Mapping) is a programming technique that bridges the gap between object-oriented code and relational databases. It allows developers to interact with databases using objects and methods in their preferred programming language, abstracting away direct SQL queries.
 
 * **How would you preserve the `Activity` state during a screen rotation?** - [Learn from here](https://www.youtube.com/watch?v=ORtieK5f_zg)
+    - via ViewModel
 
 * **What are different ways to store data in your Android app?**
+    - [Learn from here](https://github.com/weeeBox/mobile-system-design?tab=readme-ov-file#data-storage-options)
 
 * **Explain Scoped Storage in Android.**
+    - Scoped Storage is a privacy-focused storage model introduced in Android 10 (API 29) to restrict apps’ unrestricted access to shared external storage (like SD cards or device storage). It aims to protect user data by limiting apps to their own dedicated storage space and requiring explicit permissions for accessing files outside that scope.
 
 * **How to encrypt data in Android?**
+    - KeyStore/Key Chain: Hardware-backed or OS-encrypted storage for sensitive data, encryption keys, certificates, and user credentials.
+    - JetPack Security
 
 * **What is commit() and apply() in SharedPreferences?**
     - commit() returns a boolean value of success or failure immediately by writing data synchronously.
-    - apply() is asynchronous and it won't return any boolean response. If you have an apply() outstanding and you are performing commit(), then the commit() will be blocked until the apply() is not completed.
+    - apply() is asynchronous and it won't return any boolean response. If you have an apply() outstanding and you are performing commit(), then the commit() will be blocked until the apply() is completed.
 
 #### Look and Feel
 
 * **What is a `Spannable`?**
+    - Spannable is an interface used to apply rich text formatting to specific parts of a TextView or other text components. It allows you to style individual characters or paragraphs within a single string by attaching spans (markup objects) to text ranges.
 
 * **What is a `SpannableString`?**
    - A SpannableString has immutable text, but its span information is mutable. Use a SpannableString when your text doesn't need to be changed but the styling does. Spans are ranges over the text that include styling information like color, heighliting, italics, links, etc
@@ -821,22 +831,61 @@ Android Interview Questions and Answers:
 * **What are the best practices for using text in Android?**
 
 * **How to implement Dark mode in any application?**
+    - Use theme
+    - Compose handles it by Material design. Color choices for the light and dark themes are defined in the IDE-generated Theme.kt file.
 
 #### Memory Optimizations
 
 * **What is the `onTrimMemory()` method?** - [Learn from here](https://www.linkedin.com/posts/amit-shekhar-iitbhu_softwareengineer-androiddev-android-activity-7267752779727679488--kk4)
+    - The onTrimMemory() callback method notifies your app of memory-related events, enabling you to release some memory, such as by clearing your in-memory cache
 
 * **How to identify and fix OutOfMemory issues?**
+    - Identify: look for java.lang.OutOfMemoryError or OutOfMemoryException in logcat
+    - Common issue:
+        - context leak
+        - unreleased resources, e.g unclosed InputStream
 
 * **How do you find memory leaks in Android applications?**
+    - Android studio profiler
 
 #### Battery Life Optimizations
 
 * **How to reduce battery usage in an android application?**
+    - **Optimize Background Processes**  
+      - Use `WorkManager`/`JobScheduler` to schedule deferrable tasks when the device is idle, charging, or on Wi-Fi.  
+      - Avoid long-running background services; use foreground services only for user-aware tasks (e.g., music playback).  
+      - Adapt to Doze Mode by deferring non-critical tasks and using `setAndAllowWhileIdle()` for essential alarms.  
+    
+    - **Efficient Network Usage**  
+      - Batch network requests to reduce radio wakeups.  
+      - Use efficient formats like Protocol Buffers and enable GZIP compression.  
+      - Leverage caching to minimize redundant data fetches.  
+      - Prefer Firebase Cloud Messaging (FCM) push over polling.  
+    
+    - **Location Management**  
+      - Use `FusedLocationProviderClient` with `PRIORITY_LOW_POWER` for coarse location updates.  
+      - Unregister location listeners when the app is in the background.  
+      - Limit update frequency by increasing intervals between location requests.  
+    
+    - **Sensor and Wakelock Usage**  
+      - Release sensors (e.g., accelerometer, gyroscope) when the app is backgrounded.  
+      - Minimize `WakeLock` usage and release immediately after task completion.  
+    
+    - **UI and CPU Optimization**  
+      - Optimize layouts to reduce overdraw and use `ConstraintLayout`.  
+      - Limit heavy animations and profile CPU usage with Android Studio Profiler.  
+      - Use thread pools (`ExecutorService`) to manage background threads efficiently.  
 
 * **What is Doze? What about App Standby?** - [Learn from here](https://developer.android.com/training/monitoring-device-state/doze-standby)
+    - Doze: Doze reduces battery consumption by deferring background CPU and network activity for apps when the device is unused for long periods of time.
+    - App standby: App Standby defers background network activity for apps with no recent user activity.
 
 * **What is `overdraw`?** - [Learn from here](https://developer.android.com/topic/performance/rendering/overdraw.html)
+    - overdraw: an app draws the same pixel more than once within a single frame
+    - fix overdraw:
+        - Remove unnecessary backgrounds in layouts: An unnecessary background might not be visible because it's completely covered by everything the app is drawing on top of it. For example, the system might completely cover a parent's background when it draws child views on top of it.
+        - Flatten the view hierarchy.
+        - Reduce transparency: reduce the number of transparent objects you render.
 
 #### Supporting Different Screen Sizes
 
