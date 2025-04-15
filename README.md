@@ -217,7 +217,7 @@ Topics you should know in **Kotlin Flow API** for Android Interview:
   - debounce: Returns a flow that mirrors the original flow, but filters out values that are followed by the newer values within the given timeout. The latest value is always emitted.
   - flatMapConcat: Transforms elements emitted by the original flow by applying transform, that returns another flow, and then concatenating and flattening these flows.
   - flatMapLatest:	Cancels previous Flow on new emission
-  - buffer: cache intermediate results of a flow
+  - [buffer](https://kotlinlang.org/docs/flow.html#buffering): cache intermediate results of a flow so flow and collector can run in parallel
   - conflate: skip intermediate result. Only process the most recent one by dropping emitted values
   - collectLatest: cancel the code in collect block on a new value
 * Terminal operators
@@ -890,10 +890,24 @@ Android Interview Questions and Answers:
 #### Supporting Different Screen Sizes
 
 * **How do you support different types of resolutions?** - [Learn from here](https://developer.android.com/training/multiscreen/screensizes)
+    - Alternative layout: use resource qualifiers for different screen sizes: e.g layhout-hdpi
 
 #### Permissions
 
 * **What are the different protection levels in permission?**
+    - Normal: Low-risk permissions that don’t pose a threat to user privacy or device operation.
+        - Behavior:
+            - Automatically granted at install time.
+            - No user interaction required.
+    - Dangerous: Permissions that access sensitive user data (e.g., location, contacts) or device features (e.g., camera).
+        - Behavior:
+            - Requires explicit user approval at runtime (for apps targeting API 23+).
+            - Denied by default until the user grants consent.
+    - Signature: Permissions granted only to apps signed with the same certificate as the app declaring the permission.
+        - Behavior:
+            - Automatically granted if the requesting app shares the signing key.
+            - Used for secure inter-app communication (e.g., between apps from the same developer).
+    - Other: there are a lot!
 
 #### Native Programming
 
