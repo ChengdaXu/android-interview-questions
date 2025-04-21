@@ -978,6 +978,12 @@ Android Interview Questions and Answers:
 ### Android Libraries
 
 Android Interview Questions and Answers:
+* **RxJava vs Coroutine + flow** - [Learn from here](https://stackoverflow.com/questions/42066066/how-kotlin-coroutines-are-better-than-rxkotlin)
+    - Async handling: suspend function is much easier to use than RxJava and requires less boilerplate code
+    - Thread management: much easier in Coroutine with withContext. RxJava requires explicit thread specification using subscribeOn and observeOn. This can cause some confusion and uncertainty of which thread will run the code. See more details in the linked post
+    - Structured concurrency: it requires a lot of manual effort to do strucutre concurrency in RxJava but in Coroutine you get it for free
+    - Learning curve: learning curve for RxJava is much steeper
+    - Drawback of flow + coroutine: basically no. Some niche operator or function might not yet implemented yet
 
 * **Explain OkHttp Interceptor** - [Learn from here](https://outcomeschool.com/blog/okhttp-interceptor)
 
